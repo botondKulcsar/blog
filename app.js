@@ -1,15 +1,24 @@
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+const { result } = require('lodash');
+
 
 // express app
 const app = express();
+
+// connect to mongoDB
+const dbURI = 'mongodb+srv://kecs:1gumibaba2@cluster0.twaol.mongodb.net/node-tuts?retryWrites=true&w=majority'
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
 
 // register view engine
 app.set('view engine', 'ejs');
 // app.set('views', 'myviews');
 
-// listen for requests
-app.listen(3000);
+// listen for requests - moved to mongoose.connect method, in order not 2 happen too early
+
 
 // middleware & static files
 app.use(express.static('public'));
